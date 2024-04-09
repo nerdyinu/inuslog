@@ -1,6 +1,5 @@
 import { getBlogPosts } from "app/blog/utils";
 import { baseUrl } from "app/sitemap";
-export const runtime = "edge";
 export async function GET() {
 	let allBlogs = await getBlogPosts();
 
