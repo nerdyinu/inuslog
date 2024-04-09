@@ -3,6 +3,7 @@ import { CustomMDX } from "app/components/mdx";
 import { baseUrl } from "app/sitemap";
 import { notFound } from "next/navigation";
 import { formatDate } from "../date";
+export const runtime = "edge";
 export async function generateStaticParams() {
 	let posts = getBlogPosts();
 
