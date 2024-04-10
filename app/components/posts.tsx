@@ -1,5 +1,4 @@
-import { formatDate } from "app/blog/date";
-import { getBlogPosts } from "app/blog/utils";
+import { formatDate } from "app/@blog/blog/date";
 import Link from "next/link";
 
 export function BlogPosts() {

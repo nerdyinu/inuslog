@@ -39,8 +39,12 @@ export const metadata: Metadata = {
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 
 export default function RootLayout({
+	toc,
+	blog,
 	children,
 }: {
+	toc: React.ReactNode;
+	blog: React.ReactNode;
 	children: React.ReactNode;
 }) {
 	return (
@@ -53,6 +57,7 @@ export default function RootLayout({
 			)}
 		>
 			<body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
+				{toc}
 				<main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
 					<Navbar />
 					{children}
