@@ -40,9 +40,11 @@ const cx = (...classes) => classes.filter(Boolean).join(" ");
 
 export default function RootLayout({
   toc,
+  giscus,
   children,
 }: {
   toc: React.ReactNode;
+  giscus: React.ReactNode,
   children: React.ReactNode;
 }) {
   return (
@@ -59,7 +61,7 @@ export default function RootLayout({
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Navbar />
           {children}
-          <Footer />
+          <Footer>{giscus}</Footer>
           <Analytics />
           <SpeedInsights />
         </main>

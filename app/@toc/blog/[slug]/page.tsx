@@ -5,11 +5,11 @@ import { cn } from "app/lib/utils";
 
 export default function Toc({ params }) {
   const slug = params.slug;
-  console.log(slug);
-  if (!slug) return;
+  if (!slug) return null;
   const cache = postsCache().find((post) => post.slug === slug);
   if (!cache) return;
   const toc = parseToc(cache.content);
+  console.log(`toc:${slug}`)
   return (
     <aside
       className={cn(
