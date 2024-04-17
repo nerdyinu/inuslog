@@ -53,7 +53,7 @@ const useTocScroll = (tableOfContents: TOCSection[]) => {
 			pageTop = parseFloat(
 				window
 					.getComputedStyle(document.documentElement)
-					.getPropertyValue("--page-top")
+					.getPropertyValue("--spacing-page-top")
 					.match(/[\d.]+/)?.[0] ?? "0",
 			);
 		};

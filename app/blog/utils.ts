@@ -1,14 +1,20 @@
 import fs from "fs";
 import path from "path";
 
-type Metadata = {
+export type Metadata = {
 	title: string;
 	publishedAt: string;
 	summary: string;
 	image?: string;
 };
 
-function parseFrontmatter(fileContent: string) {
+export type Post = {
+	metadata: Metadata;
+	slug: string;
+	content: string;
+};
+
+function parseFrontmatter(fileContent: string): Omit<Post, "slug"> {
 	let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
 	let match = frontmatterRegex.exec(fileContent);
 	let frontMatterBlock = match![1];
@@ -35,7 +41,7 @@ function readMDXFile(filePath) {
 	return parseFrontmatter(rawContent);
 }
 
-function getMDXData(dir) {
+function getMDXData(dir): Post[] {
 	let mdxFiles = getMDXFiles(dir);
 	return mdxFiles.map((file) => {
 		let { metadata, content } = readMDXFile(path.join(dir, file));
