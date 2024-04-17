@@ -17,11 +17,7 @@ export default function Portal({
 	return isMounted ? (
 		<>
 			{ReactDOM.createPortal(
-				<TableOfContent
-					data-animate
-					className="px-2 text-sm md:hidden"
-					toc={toc}
-				/>,
+				<TableOfContent data-animate className="px-2 text-sm" toc={toc} />,
 				document.getElementById("toc") as HTMLElement,
 			)}
 			{ReactDOM.createPortal(

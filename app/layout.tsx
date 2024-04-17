@@ -53,16 +53,14 @@ export default function RootLayout({
 				GeistMono.variable,
 			)}
 		>
-			<body className="antialiased flex justify-center mx-4 mt-8 lg:mx-auto">
-				<aside
-					id="toc"
-					className={cn(
-						"fixed top-page flex max-w-[220px] -translate-x-[230px] translate-y-[140px] flex-col",
-						"transition-opacity lg:opacity-0",
-						"md:relative md:top-0 md:-ml-2 md:mb-7 md:translate-x-0 md:opacity-100",
-					)}
-				></aside>
-				<main className="max-w-xl flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+			<body className="antialiased mx-4 mt-8 lg:mx-auto">
+				<main>
+					<aside
+						id="toc"
+						className={cn(
+							"fixed top-[128px] flex max-w-[220px] -translate-x-[230px] translate-y-[140px] flex-col mr-4",
+						)}
+					></aside>
 					<Navbar />
 					{children}
 					<Footer />
