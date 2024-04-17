@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import Footer from "./components/footer";
 import { Navbar } from "./components/nav";
 import "./global.css";
+import { cn } from "./lib/utils";
 import { baseUrl } from "./sitemap";
 
 export const metadata: Metadata = {
@@ -56,12 +57,20 @@ export default function RootLayout({
         GeistMono.variable,
       )}
     >
-      <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
-        {toc}
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+      <body className="antialiased flex justify-center mx-4 mt-8 lg:mx-auto">
+        <aside
+          id="toc"
+          className={cn(
+            "fixed top-page flex max-w-[220px] -translate-x-[230px] translate-y-[140px] flex-col",
+            "transition-opacity lg:opacity-0",
+            "md:relative md:top-0 md:-ml-2 md:mb-7 md:translate-x-0 md:opacity-100",
+          )}
+        >
+        </aside>
+        <main className="max-w-xl flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Navbar />
           {children}
-          <Footer>{giscus}</Footer>
+          <Footer />
           <Analytics />
           <SpeedInsights />
         </main>
