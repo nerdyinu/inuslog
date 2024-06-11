@@ -1,0 +1,114 @@
+---
+author: Inu Jung
+publishedAt: 2024-06-11T20:41:10.000Z
+title: NextJS에서 Follow Button UI 구현 예시
+slug: nextjs-follow-button-ui-implementation-example
+featured: true
+draft: false
+tags:
+  - nextjs
+  - transition
+  - button UI
+  - folow
+summary: nextjs follow button ui implementation example
+---
+### NextJS에서 Follow Button UI를 구현한 예시
+
+`NextAuth, Prisma를 사용한다고 가정 하에 Follow Button UI를 구현`
+
+```tsx
+//FollowButton.tsx
+interface Props{
+ targetUserId: string;
+}
+
+export default async function FollowButton({targetUserId}:Props){
+ const session = await getServerSession(authOptions);
+ const currentUserId = await prisma.user.findFirst({where:{email:session?.user?.email!}}).then(user=>user?.id!)!
+ const isFollowing = await prisma.follows.findFirst({where:{followerId:currentUserId, followingId:targetUserId}})
+
+ return <FollowClient currentUserId={currentUserId} targetUserId={targetUserId} isFollowing={!!isFollowing}>
+}
+```
+
+```tsx
+// FollowClient.tsx
+"use client";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { follow, unfollow } from "./action";
+
+interface Props {
+  currentUserId: string;
+  targetUserId: string;
+  isFollowing: boolean;
+}
+
+export default function FollowClient({
+  currentUserId,
+  targetUserId,
+  isFollowing,
+}: Props) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
+  const isMutating = isFetching || isPending;
+
+  const handleFollow = async () => {
+    setIsFetching(true);
+    await follow(currentUserId, targetUserId);
+    setIsFetching(false);
+    startTransition(() => {
+      router.refresh();
+    });
+  };
+
+  const handleUnfollow = async () => {
+    setIsFetching(true);
+    await unfollow(currentUserId, targetUserId);
+    setIsFetching(false);
+    startTransition(() => {
+      router.refresh();
+    });
+  };
+
+  return (
+    <button
+      onClick={isFollowing ? handleUnfollow : handleFollow}
+      disabled={isMutating}
+    >
+      {!isMutating ? (isFollowing ? "Unfollow" : "Follow") : "..."}
+    </button>
+  );
+}
+```
+
+```tsx
+// action.ts
+"use server";
+import prisma from "../lib/prisma"; // Adjust the path to your prisma instance
+import { revalidatePath } from "next/cache"; // Adjust the path to the correct import if needed
+
+export const follow = async (currentUserId: string, targetUserId: string) => {
+  await prisma.follows.create({
+    data: {
+      followerId: currentUserId,
+      followingId: targetUserId,
+    },
+  });
+  revalidatePath("/some-path"); // Adjust the path as needed
+};
+
+export const unfollow = async (currentUserId: string, targetUserId: string) => {
+  await prisma.follows.delete({
+    where: {
+      followerId_followingId: {
+        followerId: currentUserId,
+        followingId: targetUserId,
+      },
+    },
+  });
+  revalidatePath("/some-path"); // Adjust the path as needed
+};
+```
+
