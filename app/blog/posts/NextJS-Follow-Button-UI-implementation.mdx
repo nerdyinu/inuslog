@@ -86,9 +86,8 @@ export default function FollowClient({
 ```tsx
 // action.ts
 "use server";
-import prisma from "../lib/prisma"; // Adjust the path to your prisma instance
-import { revalidatePath } from "next/cache"; // Adjust the path to the correct import if needed
-
+import prisma from "../lib/prisma";
+import { revalidatePath } from "next/cache";
 export const follow = async (currentUserId: string, targetUserId: string) => {
   await prisma.follows.create({
     data: {
@@ -96,7 +95,7 @@ export const follow = async (currentUserId: string, targetUserId: string) => {
       followingId: targetUserId,
     },
   });
-  revalidatePath("/some-path"); // Adjust the path as needed
+  revalidatePath("/some-path");
 };
 
 export const unfollow = async (currentUserId: string, targetUserId: string) => {
@@ -108,7 +107,7 @@ export const unfollow = async (currentUserId: string, targetUserId: string) => {
       },
     },
   });
-  revalidatePath("/some-path"); // Adjust the path as needed
+  revalidatePath("/some-path");
 };
 ```
 
