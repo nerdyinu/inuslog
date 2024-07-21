@@ -58,7 +58,7 @@ export default function RootLayout({
           <aside
             id="toc"
             className={cn(
-              "fixed top-[128px] flex max-w-[220px] -translate-x-[230px] translate-y-[140px] flex-col mr-4",
+              "fixed top-[128px] flex max-w-[220px] left-[158px] -translate-x-[230px] translate-y-[140px] flex-col mr-4",
             )}
           ></aside>
           <Navbar />
