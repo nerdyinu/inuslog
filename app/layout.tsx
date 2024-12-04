@@ -55,13 +55,16 @@ export default function RootLayout({
     >
       <body className="antialiased mx-4 mt-8 lg:mx-auto">
         <main>
+
+          <Navbar />
           <aside
             id="toc"
             className={cn(
-              "fixed top-[128px] flex max-w-[220px] left-[158px] -translate-x-[230px] translate-y-[140px] flex-col mr-4",
+              "hidden",
+              "lg:block lg:fixed lg:top-[128px] lg:left-[158px] lg:-translate-x-[30px] lg:translate-y-[20px]",
+              "lg:flex lg:max-w-[220px] lg:flex-col lg:mr-4"
             )}
           ></aside>
-          <Navbar />
           {children}
           <Footer />
           <Analytics />
